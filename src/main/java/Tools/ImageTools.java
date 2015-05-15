@@ -1,7 +1,10 @@
 package Tools;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.*;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by akivv on 15.5.2015.
@@ -23,5 +26,9 @@ public class ImageTools {
 		};
 		final ImageProducer ip = new FilteredImageSource(img.getSource(), filter);
 		return Toolkit.getDefaultToolkit().createImage(ip);
+	}
+
+	public static BufferedImage createImage(File file) throws IOException {
+		return ImageIO.read(file);
 	}
 }

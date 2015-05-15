@@ -1,18 +1,25 @@
-import java.util.concurrent.TimeUnit;
+import Tools.ImageTools;
+import Tools.TimeTools;
 
+import javax.swing.*;
+import java.awt.*;
 /**
  * Created by akivv on 15.5.2015.
  */
-public class Norttipeli extends Thread {
+public class Norttipeli extends JPanel implements Runnable {
+	private final int PWIDTH = 800, PHEIGHT = 600;
 	private boolean running;
+	private Graphics dbg;
+	private Image dbImage = null;
 
-	@Override
 	public void run() {
 		running = true;
+		//Piirrä ensimmäisen kartan kuva
+		dbImage = ImageTools.makeColorTransparent(ImageTools.createImage(), Color.GREEN);
 		while (running) {
 			long beforeTime, timeDiff, sleepTime;
-			beforeTime = getCurrentTimeInMillisUsingNanoTime();
-			running = true;
+			beforeTime = TimeTools.getCurrentTimeInMillisUsingNanoTime();
+
 			gameUpdate();
 			gameRender();
 			paintScreen();
@@ -27,20 +34,36 @@ public class Norttipeli extends Thread {
 			} catch(InterruptedException e) {
 				e.printStackTrace();
 			}
-			beforeTime = getCurrentTimeInMillisUsingNanoTime();
+			beforeTime = TimeTools.getCurrentTimeInMillisUsingNanoTime();
 		}
 	}
 
-	private long getCurrentTimeInMillisUsingNanoTime() {
-		return TimeUnit.MILLISECONDS.convert(System.nanoTime(), TimeUnit.NANOSECONDS);
-	}
-
 	private void gameUpdate() {
+		//Update game-tiedot
 	}
 
 	private void gameRender() {
+		if (dbImage == null) {
+			//Piirrä levelin taustakuva!
+			dbg = dbImage.getGraphics();
+			paivitadbImageScrollaten();
+		}
+		dbg = dbImage.getGraphics();
+		//Piirrä dbg:hen hahmot niiden draw-menetelmillä
 	}
 
 	private void paintScreen() {
-
+		Graphics graphics;
+		graphics = this.getGraphics();
+		if (graphics != null && dbImage != null) {
+			graphics.drawImage(dbImage, 0, 0, null);
+		}
+		Toolkit.getDefaultToolkit().sync();
+		graphics.dispose();
 	}
+
+	private void paivitadbImageScrollaten() {
+		
+	}
+
+}
