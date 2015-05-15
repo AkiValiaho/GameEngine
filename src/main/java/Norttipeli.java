@@ -15,6 +15,21 @@ public class Norttipeli extends JPanel implements Runnable {
 	private Graphics dbg;
 	private Image dbImage = null;
 
+	public Norttipeli() {
+		//TODO alusta pelaajahahmo
+		//TODO alusta vihollishahmot ensimm‰iseen kentt‰‰n
+	}
+
+	public static void main(String[] args) {
+		JFrame mainFrame = new JFrame("Nˆrttipeli");
+		mainFrame.setSize(new Dimension(800, 600));
+		Norttipeli paneeli = new Norttipeli();
+		mainFrame.add(paneeli);
+		mainFrame.setVisible(true);
+		Thread asdf = new Thread(paneeli);
+		asdf.start();
+	}
+
 	public void run() {
 		running = true;
 		//Piirr√§ ensimm√§isen kartan kuva
@@ -38,7 +53,6 @@ public class Norttipeli extends JPanel implements Runnable {
 			}
 			try {
 				Thread.sleep(sleepTime);  // in ms    }    catch(InterruptedException ex){}
-
 			} catch(InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -73,5 +87,4 @@ public class Norttipeli extends JPanel implements Runnable {
 	private void paivitadbImageScrollaten() {
 
 	}
-
 }
