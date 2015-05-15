@@ -3,6 +3,9 @@ import Tools.TimeTools;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+
 /**
  * Created by akivv on 15.5.2015.
  */
@@ -15,7 +18,12 @@ public class Norttipeli extends JPanel implements Runnable {
 	public void run() {
 		running = true;
 		//Piirrä ensimmäisen kartan kuva
-		dbImage = ImageTools.makeColorTransparent(ImageTools.createImage(), Color.GREEN);
+		try {
+			dbImage = ImageTools.makeColorTransparent(ImageTools.createImage(new File("res/level1Tausta/tausta.jpg")), Color
+					.GREEN);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 		while (running) {
 			long beforeTime, timeDiff, sleepTime;
 			beforeTime = TimeTools.getCurrentTimeInMillisUsingNanoTime();
@@ -63,7 +71,7 @@ public class Norttipeli extends JPanel implements Runnable {
 	}
 
 	private void paivitadbImageScrollaten() {
-		
+
 	}
 
 }
