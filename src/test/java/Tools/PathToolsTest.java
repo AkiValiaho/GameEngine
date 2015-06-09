@@ -16,4 +16,9 @@ public class PathToolsTest {
 			fail("Trailaava polku vaan kiitos");
 		}
 	}
+
+	@Test
+	public void testReturnPathToJarDirectoryOnWindows() throws Exception {
+		//todo testaa Windowsilla tuleeko pathi oikein absoluuttisena! Jos ei, fixaa tilanne
+	}
 }
