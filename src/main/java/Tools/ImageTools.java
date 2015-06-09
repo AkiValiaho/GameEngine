@@ -28,6 +28,11 @@ public class ImageTools {
 		return Toolkit.getDefaultToolkit().createImage(ip);
 	}
 
+	public static BufferedImage imageFromClassPath(String tClass, String imageName) throws IOException, ClassNotFoundException {
+		Class xClass = Class.forName(tClass);
+		String file = xClass.getResource(imageName).getFile();
+		return createImage(new File(file));
+	}
 	public static BufferedImage createImage(File file) throws IOException {
 		return ImageIO.read(file);
 	}

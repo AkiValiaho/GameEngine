@@ -3,46 +3,47 @@ import Tools.TimeTools;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 
 /**
  * Created by akivv on 15.5.2015.
  */
-public class Norttipeli extends JPanel implements Runnable {
+public class GameLoop extends JPanel implements Runnable {
 	private final int PWIDTH = 800, PHEIGHT = 600;
 	private boolean running;
 	private Graphics dbg;
 	private Image dbImage = null;
+	private ClassLoader loader;
 
-	public Norttipeli() {
+	public GameLoop() {
 		//TODO alusta pelaajahahmo
-		//TODO alusta vihollishahmot ensimm�iseen kentt��n
+		loader = getClass().getClassLoader();
+		//TODO alusta vihollishahmot ensimm�iseen kentt��n
 	}
 
 	public static void main(String[] args) {
-		JFrame mainFrame = new JFrame("N�rttipeli");
+		JFrame mainFrame = new JFrame("xPeli");
 		mainFrame.setSize(new Dimension(800, 600));
-		Norttipeli paneeli = new Norttipeli();
+		GameLoop paneeli = new GameLoop();
 		mainFrame.add(paneeli);
 		mainFrame.setVisible(true);
 		Thread asdf = new Thread(paneeli);
 		asdf.start();
 	}
-
 	public void run() {
 		running = true;
 		//Piirrä ensimmäisen kartan kuva
 		try {
-			dbImage = ImageTools.makeColorTransparent(ImageTools.createImage(new File("res/level1Tausta/tausta.jpg")), Color
-					.GREEN);
+
+			dbImage = ImageTools.imageFromClassPath("Kartat.Level1", "joystick-23234_1280.png");
 		} catch(IOException e) {
+			e.printStackTrace();
+		} catch(ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		while (running) {
 			long beforeTime, timeDiff, sleepTime;
 			beforeTime = TimeTools.getCurrentTimeInMillisUsingNanoTime();
-
 			gameUpdate();
 			gameRender();
 			paintScreen();
@@ -59,9 +60,9 @@ public class Norttipeli extends JPanel implements Runnable {
 			beforeTime = TimeTools.getCurrentTimeInMillisUsingNanoTime();
 		}
 	}
-
 	private void gameUpdate() {
 		//Update game-tiedot
+		//todo Kehitä kartanvaihtologiikka tähän riippuen hahmon sijainnista
 	}
 
 	private void gameRender() {
@@ -83,8 +84,7 @@ public class Norttipeli extends JPanel implements Runnable {
 		Toolkit.getDefaultToolkit().sync();
 		graphics.dispose();
 	}
-
 	private void paivitadbImageScrollaten() {
-
+		//todo siirrä kartan dbImage-kuvaa hahmon sijainnista riippuen oikeaan asentoon tai ole siirtämättä
 	}
 }
